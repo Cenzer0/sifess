@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex flex-col items-center max-w-2xl mx-auto">
+
+    <!-- Profile Header -->
+    <div class="text-center mb-8">
+        <div
+            class="w-24 h-24 bg-gradient-to-tr from-sifess-pink to-sifess-cyan rounded-full mx-auto mb-4 border-4 border-gray-800 shadow-cartoon flex items-center justify-center text-4xl font-bold text-white">
+            {{ recipient.username|make_list|first|upper }}
+        </div>
+        <h2 class="text-2xl font-bold">Confess to @{{ recipient.username }}</h2>
+        <p class="text-gray-500 font-medium">Send an anonymous message. No login required!</p>
+    </div>
+
+    <!-- Confession Form -->
+    <div class="cartoon-card bg-white p-6 rounded-2xl w-full">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                {{ form.content_encrypted }}
+                {% if form.content_encrypted.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.content_encrypted.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Mood Selector -->
+            <div x-data="{ currentMood: 'neutral', moods: ['🔥', '😂', '❤️', '💀', '🥺', '😡'] }">
+                <input type="hidden" name="mood" x-model="currentMood">
+
+                <div class="flex gap-2 mb-4 justify-center">
+                    <template x-for="m in moods">
+                        <button type="button" @click="currentMood = m"
+                            :class="{'scale-125 bg-gray-200': currentMood === m, 'hover:scale-110': currentMood !== m}"
+                            class="text-2xl p-2 rounded-full transition-transform duration-200 filter grayscale hover:grayscale-0"
+                            :class="{'grayscale-0': currentMood === m}" x-text="m"></button>
+                    </template>
+                </div>
+
+                <div class="flex justify-between items-center mt-2">
+                    <p class="text-xs text-gray-400 font-bold uppercase tracking-wider"
+                        x-text="'Current Vibe: ' + currentMood"></p>
+                    <button type="submit"
+                        class="cartoon-btn bg-black text-white px-6 py-3 rounded-xl font-bold hover:bg-gray-800 transform active:scale-95">
+                        Send Secret 🚀
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <p class="text-center mt-8 text-gray-400 text-sm">
+        Report abuse? <a href="#" class="underline">Click here</a>. | <a href="{% url 'home' %}"
+            class="underline font-bold text-sifess-pink">Create your own link</a>
+    </p>
+
+</div>
+{% endblock %}

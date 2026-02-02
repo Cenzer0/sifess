@@ -1,0 +1,9 @@
+{% for confession in confessions %}
+{% include 'confessions/partials/confession_card.html' %}
+{% empty %}
+<div class="text-center py-20 bg-white rounded-3xl border-4 border-dashed border-gray-200 col-span-full">
+    <i data-lucide="ghost" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
+    <h3 class="text-xl font-bold text-gray-400">It's quiet in here...</h3>
+    <p class="text-gray-400">Share your link to get messages!</p>
+</div>
+{% endfor %}

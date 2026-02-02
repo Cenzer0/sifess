@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+    <!-- Dashboard Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <div>
+            <h1 class="text-3xl font-bold">Your Inbox 📬</h1>
+            <p class="text-gray-500 font-medium">You have {{ confessions.count }} messages.</p>
+        </div>
+
+        <div class="bg-white p-3 rounded-xl border-2 border-gray-200 flex items-center gap-2 shadow-sm">
+            <span class="text-gray-400 font-bold text-sm">sifess.app/u/{{ user.slug }}</span>
+            <button
+                onclick="navigator.clipboard.writeText(window.location.origin + '/u/{{ user.slug }}/'); alert('Copied!');"
+                class="p-2 hover:bg-gray-100 rounded-lg text-sifess-pink">
+                <i data-lucide="copy"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Message Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="confession-grid"
+        hx-get="{% url 'dashboard_grid' %}" hx-trigger="every 10s" hx-swap="innerHTML">
+        {% include 'confessions/partials/confession_grid.html' %}
+    </div>
+
+</div>
+
+<style>
+    .cust-scroll::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .cust-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,45 @@
+<div class="cartoon-card relative p-6 rounded-2xl flex flex-col justify-between h-64 transform hover:rotate-1 transition-transform duration-200
+    {% if confession.is_pinned %}bg-yellow-200 border-yellow-500{% else %}{% cycle 'bg-sifess-pink' 'bg-sifess-cyan' 'bg-sifess-purple' %}{% endif %}"
+    id="confession-{{ confession.id }}">
+
+    {% if confession.is_pinned %}
+    <div
+        class="absolute -top-3 -right-3 bg-red-500 rounded-full w-8 h-8 border-2 border-white shadow-sm flex items-center justify-center text-white">
+        <i data-lucide="pin" class="w-4 h-4 fill-current"></i>
+    </div>
+    {% endif %}
+
+    <div class="overflow-y-auto max-h-40 mb-4 cust-scroll">
+        <div class="mb-2 text-2xl" title="Mood">
+            {{ confession.mood }}
+        </div>
+        <p class="text-lg font-bold text-gray-800 leading-tight">
+            "{{ confession.content_encrypted }}"
+        </p>
+    </div>
+
+    <div class="flex justify-between items-end border-t-2 border-black/10 pt-4">
+        <span class="text-xs font-bold text-black/50">{{ confession.created_at|timesince }} ago</span>
+
+        <div class="flex gap-2 card-actions">
+            <button type="button" onclick="shareConfession('confession-{{ confession.id }}')"
+                class="p-2 bg-white/50 rounded-lg hover:bg-white text-sifess-pink transition-colors"
+                title="Share as Image">
+                <i data-lucide="share-2" class="w-4 h-4"></i>
+            </button>
+
+            <button hx-post="{% url 'pin_confession' confession.id %}" hx-target="#confession-{{ confession.id }}"
+                hx-swap="outerHTML" class="p-2 bg-white/50 rounded-lg hover:bg-white text-gray-700 transition-colors"
+                title="{% if confession.is_pinned %}Unpin{% else %}Pin{% endif %}">
+                <i data-lucide="pin" class="w-4 h-4 {% if confession.is_pinned %}fill-black{% endif %}"></i>
+            </button>
+
+            <button hx-post="{% url 'delete_confession' confession.id %}"
+                hx-confirm="Are you sure you want to delete this confession?"
+                hx-target="#confession-{{ confession.id }}" hx-swap="outerHTML"
+                class="p-2 bg-white/50 rounded-lg hover:bg-white text-red-500 transition-colors" title="Delete">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+</div>

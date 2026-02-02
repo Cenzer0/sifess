@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center text-center mt-10">
+    <h1
+        class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-6 drop-shadow-md">
+        Send Secret Notes!
+    </h1>
+    <p class="text-xl text-gray-600 font-medium mb-10 max-w-2xl">
+        SIFESS is the safe, fun, and anonymous way to hear what your friends really think.
+        <br>No tracking. No judgment. Just vibes. ✨
+    </p>
+
+    <div class="flex gap-6">
+        {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}"
+            class="cartoon-btn px-8 py-4 bg-sifess-cyan text-gray-800 text-2xl font-bold rounded-2xl hover:bg-blue-300 transform hover:-rotate-2">
+            Go to Dashboard 🚀
+        </a>
+        {% else %}
+        <a href="{% url 'register' %}"
+            class="cartoon-btn px-8 py-4 bg-sifess-pink text-white text-2xl font-bold rounded-2xl hover:bg-red-400 transform hover:-rotate-2">
+            Get Your Link 🔥
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+        <div class="cartoon-card bg-white p-6 rounded-xl transform rotate-1">
+            <h3 class="text-2xl font-bold mb-2">🔒 100% Anonymous</h3>
+            <p>We hide your identity so you can be real.</p>
+        </div>
+        <div class="cartoon-card bg-sifess-purple p-6 rounded-xl transform -rotate-1">
+            <h3 class="text-2xl font-bold mb-2 text-gray-800">📸 Safe & Secure</h3>
+            <p>Advanced filters keep specific bad vibes out.</p>
+        </div>
+        <div class="cartoon-card bg-white p-6 rounded-xl transform rotate-1">
+            <h3 class="text-2xl font-bold mb-2">🎈 Fun Design</h3>
+            <p>Because secrets shouldn't be boring.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
