@@ -22,8 +22,8 @@ from cryptography.fernet import Fernet
 SECRET_KEY_FERNET = env('SECRET_KEY_FERNET', default='TXkgMzIgYnl0ZSBrZXkgaXMgc28gc2VjcmV0ISEhISE=')
 
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', 'testserver'])
-CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['https://*.railway.app'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', 'testserver', 'cenzero.biz.id', 'www.cenzero.biz.id'])
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['https://*.railway.app', 'https://cenzero.biz.id', 'https://www.cenzero.biz.id'])
 
 # Application definition
 
