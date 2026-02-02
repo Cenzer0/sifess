@@ -26,7 +26,7 @@ window.shareConfession = function (cardId) {
 
     // Add branding watermark
     const waterMark = document.createElement('div');
-    waterMark.innerText = 'sifess.app';
+    waterMark.innerText = 'cenzero.biz.id';
     waterMark.className = 'absolute bottom-2 right-4 text-xs font-bold opacity-50 text-black';
     clone.appendChild(waterMark);
 

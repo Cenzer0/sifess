@@ -6,12 +6,13 @@
     <!-- Dashboard Header -->
     <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
         <div>
-            <h1 class="text-3xl font-bold">Your Inbox 📬</h1>
+            <h1 class="text-3xl font-bold flex items-center gap-2">Your Inbox <i data-lucide="mailbox"
+                    class="w-8 h-8"></i></h1>
             <p class="text-gray-500 font-medium">You have {{ confessions.count }} messages.</p>
         </div>
 
         <div class="bg-white p-3 rounded-xl border-2 border-gray-200 flex items-center gap-2 shadow-sm">
-            <span class="text-gray-400 font-bold text-sm">sifess.app/u/{{ user.slug }}</span>
+            <span class="text-gray-400 font-bold text-sm">cenzero.biz.id/u/{{ user.slug }}</span>
             <button
                 onclick="navigator.clipboard.writeText(window.location.origin + '/u/{{ user.slug }}/'); alert('Copied!');"
                 class="p-2 hover:bg-gray-100 rounded-lg text-sifess-pink">

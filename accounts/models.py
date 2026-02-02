@@ -9,3 +9,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        if not self.slug and self.username:
+            self.slug = self.username
+        super().save(*args, **kwargs)
