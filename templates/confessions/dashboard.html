@@ -18,16 +18,77 @@
                 class="p-2 hover:bg-gray-100 rounded-lg text-sifess-pink">
                 <i data-lucide="copy"></i>
             </button>
+            <button id="enable-notifs-btn" class="p-2 hover:bg-gray-100 rounded-lg text-sifess-cyan relative"
+                title="Enable Push Notifications">
+                <i data-lucide="bell" id="bell-icon"></i>
+                <span id="notif-status" class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full hidden"></span>
+            </button>
         </div>
     </div>
 
     <!-- Message Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="confession-grid"
-        hx-get="{% url 'dashboard_grid' %}" hx-trigger="every 10s" hx-swap="innerHTML">
+        hx-get="{% url 'dashboard_grid' %}" hx-trigger="every 10s" hx-swap="innerHTML"
+        hx-on:newNotification="playNotification()">
         {% include 'confessions/partials/confession_grid.html' %}
     </div>
 
 </div>
+
+<script>
+    const bellIcon = document.getElementById('bell-icon');
+    const notifBtn = document.getElementById('enable-notifs-btn');
+    const notifStatus = document.getElementById('notif-status');
+
+    function updateBell() {
+        if (Notification.permission === 'granted') {
+            bellIcon.classList.remove('text-gray-400');
+            bellIcon.classList.add('text-green-500', 'fill-current');
+            // notifBtn.style.display = 'none'; // Optional: hide if already granted
+        } else if (Notification.permission === 'denied') {
+            bellIcon.classList.add('text-red-400');
+        }
+    }
+
+    notifBtn.addEventListener('click', () => {
+        if (!('Notification' in window)) {
+            alert("This browser does not support desktop notification");
+        } else if (Notification.permission !== 'granted') {
+            Notification.requestPermission().then(permission => {
+                updateBell();
+                if (permission === "granted") {
+                    new Notification("Notifications Enabled!", {
+                        body: "You'll be notified when new secrets arrive.",
+                        icon: '/static/img/favicon.png'
+                    });
+                }
+            });
+        }
+    });
+
+    document.body.addEventListener('newNotification', function (evt) {
+        if (Notification.permission === "granted") {
+            const notif = new Notification("New Secret Message! 🫣", {
+                body: "Someone just confessed to you on SIFESS.",
+                icon: '/static/img/favicon.png',
+                tag: 'new-message' // Prevent stacking
+            });
+            notif.onclick = function () {
+                window.focus();
+                this.close();
+            };
+
+            // Play Sound
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3');
+            audio.play().catch(e => console.log('Audio play failed', e));
+        }
+    });
+
+    // Check initial state
+    if ('Notification' in window) {
+        updateBell();
+    }
+</script>
 
 <style>
     .cust-scroll::-webkit-scrollbar {

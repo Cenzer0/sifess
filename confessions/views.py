@@ -54,10 +54,26 @@ def dashboard(request):
     confessions = Confession.objects.filter(recipient=request.user).order_by('-is_pinned', '-created_at')
     return render(request, 'confessions/dashboard.html', {'confessions': confessions})
 
+from notifications.models import Notification
+
 @login_required
 def dashboard_grid(request):
     confessions = Confession.objects.filter(recipient=request.user).order_by('-is_pinned', '-created_at')
-    return render(request, 'confessions/partials/confession_grid.html', {'confessions': confessions})
+    
+    # Check for unread notifications
+    unread_notifications = Notification.objects.filter(recipient=request.user, is_read=False)
+    has_new = unread_notifications.exists()
+    
+    response = render(request, 'confessions/partials/confession_grid.html', {'confessions': confessions})
+    
+    if has_new:
+        # Mark them as read immediately so we don't keep buzzing
+        # (Or you might want to do this only when they click "Mark Read")
+        # For this simple implementation, we mark read = True after notifying
+        unread_notifications.update(is_read=True)
+        response['HX-Trigger'] = 'newNotification'
+        
+    return response
 
 @login_required
 def pin_confession(request, pk):
