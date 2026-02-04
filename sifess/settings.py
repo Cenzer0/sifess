@@ -22,8 +22,20 @@ from cryptography.fernet import Fernet
 SECRET_KEY_FERNET = env('SECRET_KEY_FERNET', default='TXkgMzIgYnl0ZSBrZXkgaXMgc28gc2VjcmV0ISEhISE=')
 
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', 'testserver', 'cenzero.biz.id', 'www.cenzero.biz.id'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['cenzero.biz.id', 'www.cenzero.biz.id', '34.60.121.131', 'localhost', '127.0.0.1'])
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['https://*.railway.app', 'https://cenzero.biz.id', 'https://www.cenzero.biz.id'])
+
+# Production Security Headers
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 

@@ -4,8 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SIFESS{% endblock %}</title>
+    <title>{% block title %}SIFESS - Anonymous Q&A{% endblock %}</title>
     <link rel="icon" type="image/png" href="/static/img/favicon.png">
+
+    <!-- SEO & Open Graph -->
+    <meta name="description"
+        content="{% block description %}Send anonymous messages, confessions, and questions securely. No login required for senders.{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}SIFESS - Anonymous Q&A{% endblock %}">
+    <meta property="og:description"
+        content="{% block og_description %}Send anonymous messages, confessions, and questions securely. No login required for senders.{% endblock %}">
+    <meta property="og:image"
+        content="{% block og_image %}https://cenzero.biz.id/static/img/og-image.png{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>

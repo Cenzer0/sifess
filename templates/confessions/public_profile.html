@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+
+
+{% block title %}Confess to @{{ recipient.username }} | SIFESS{% endblock %}
+{% block og_title %}Send a secret message to @{{ recipient.username }}{% endblock %}
+{% block description %}Send an anonymous message to @{{ recipient.username }} on SIFESS. No login required!{% endblock
+%}
+{% block og_description %}Send an anonymous message to @{{ recipient.username }} on SIFESS. No login required!{%
+endblock %}
+
 {% block content %}
 <div class="flex flex-col items-center max-w-2xl mx-auto">
 
