@@ -93,3 +93,13 @@ def delete_confession(request, pk):
     if request.htmx:
         return HttpResponse("")
     return redirect('dashboard')
+
+@login_required
+def like_confession(request, pk):
+    confession = get_object_or_404(Confession, pk=pk, recipient=request.user)
+    confession.likes_count += 1
+    confession.save()
+    
+    if request.htmx:
+        return render(request, 'confessions/partials/confession_card.html', {'confession': confession})
+    return redirect('dashboard')

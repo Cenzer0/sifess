@@ -23,6 +23,7 @@ class Confession(models.Model):
     is_pinned = models.BooleanField(default=False)
     is_archived = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False, help_text=_("If recipient chooses to showcase this"))
+    likes_count = models.IntegerField(default=0)
     
     created_at = models.DateTimeField(auto_now_add=True)
 

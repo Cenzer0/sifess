@@ -28,6 +28,18 @@
                 <i data-lucide="share-2" class="w-4 h-4"></i>
             </button>
 
+            <button hx-post="{% url 'like_confession' confession.id %}" hx-target="#confession-{{ confession.id }}"
+                hx-swap="outerHTML" class="p-2 bg-white/50 rounded-lg hover:bg-white text-red-500 transition-colors"
+                title="Love It">
+                <div class="flex items-center gap-1">
+                    <i data-lucide="heart"
+                        class="w-4 h-4 {% if confession.likes_count > 0 %}fill-current{% endif %}"></i>
+                    {% if confession.likes_count > 0 %}
+                    <span class="text-xs font-bold">{{ confession.likes_count }}</span>
+                    {% endif %}
+                </div>
+            </button>
+
             <button hx-post="{% url 'pin_confession' confession.id %}" hx-target="#confession-{{ confession.id }}"
                 hx-swap="outerHTML" class="p-2 bg-white/50 rounded-lg hover:bg-white text-gray-700 transition-colors"
                 title="{% if confession.is_pinned %}Unpin{% else %}Pin{% endif %}">

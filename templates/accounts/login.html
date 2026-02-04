@@ -1,31 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="flex justify-center mt-10">
-    <div class="cartoon-card bg-white p-8 rounded-2xl max-w-md w-full">
-        <h2 class="text-3xl font-bold text-center mb-6">Welcome Back! 👋</h2>
+<div class="flex justify-center items-center min-h-[calc(100vh-200px)]">
+    <div class="cartoon-card bg-white p-8 rounded-2xl max-w-md w-full relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-sifess-cyan rounded-full opacity-20"></div>
+        <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-sifess-pink rounded-full opacity-20"></div>
 
-        <form method="post" class="space-y-4">
+        <div class="text-center mb-8 relative z-10">
+            <h2
+                class="text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-sifess-pink to-sifess-purple">
+                Welcome Back!
+            </h2>
+            <p class="text-gray-500 font-medium">Ready to read some secrets? 🤫</p>
+        </div>
+
+        <form method="post" class="space-y-6 relative z-10">
             {% csrf_token %}
 
             {% for field in form %}
-            <div>
-                <label class="block font-bold text-gray-700 mb-1">{{ field.label }}</label>
+            <div class="group">
+                <label
+                    class="block font-bold text-gray-700 mb-2 ml-1 group-focus-within:text-sifess-pink transition-colors">
+                    {{ field.label }}
+                </label>
                 {{ field }}
                 {% if field.errors %}
-                <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+                <p class="text-red-500 text-sm mt-1 font-bold animate-pulse">{{ field.errors.0 }}</p>
                 {% endif %}
             </div>
             {% endfor %}
 
             <button type="submit"
-                class="w-full cartoon-btn bg-sifess-cyan text-gray-900 font-bold py-3 rounded-xl hover:bg-blue-300 mt-4">
-                Login
+                class="w-full cartoon-btn bg-black text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition-all transform hover:scale-[1.02] active:scale-95 text-lg shadow-lg">
+                Login & Explore 🚀
             </button>
         </form>
 
-        <p class="text-center mt-6 font-semibold text-gray-500">
-            No account? <a href="{% url 'register' %}" class="text-sifess-pink hover:underline">Get one here.</a>
+        <p class="text-center mt-8 font-semibold text-gray-500 relative z-10">
+            New here? <a href="{% url 'register' %}"
+                class="text-sifess-pink hover:text-red-400 hover:underline transition-colors">Join the vault.</a>
         </p>
     </div>
 </div>
